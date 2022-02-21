@@ -53,11 +53,22 @@ RegisterNetEvent('qb-spawn:client:setupSpawns', function(cData, new, apps)
             end
 
             Wait(500)
-            SendNUIMessage({
-                action = "setupLocations",
-                locations = QB.Spawns,
-                houses = myHouses,
-            })
+            local Player = QBCore.Functions.GetPlayerData()
+            local wantedLevel = Player.metadata.wantedlevel
+            if wantedLevel > 0 then 
+                QB.Spawns = {}
+                SendNUIMessage({
+                    action = "setupLocations",
+                    locations = QB.Spawns,
+                    houses = {},
+                })
+            else
+                SendNUIMessage({
+                    action = "setupLocations",
+                    locations = QB.Spawns,
+                    houses = myHouses,
+                })
+            end
         end, cData.citizenid)
     elseif new then
         SendNUIMessage({
