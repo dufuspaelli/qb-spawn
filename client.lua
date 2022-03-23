@@ -55,7 +55,14 @@ RegisterNetEvent('qb-spawn:client:setupSpawns', function(cData, new, apps)
             Wait(500)
             local Player = QBCore.Functions.GetPlayerData()
             local wantedLevel = Player.metadata.wantedlevel
-            if wantedLevel > 0 then 
+            if Player.metadata["injail"] > 0 then
+                QB.Spawns = {}
+                SendNUIMessage({
+                    action = "setupLocations",
+                    locations = QB.Spawns,
+                    houses = {},
+                })
+            elseif wantedLevel > 0 then 
                 QB.Spawns = {}
                 SendNUIMessage({
                     action = "setupLocations",
